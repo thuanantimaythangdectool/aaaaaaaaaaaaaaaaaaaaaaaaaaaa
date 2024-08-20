@@ -1,12 +1,18 @@
-def upload(uid,cookie,fb_dtsg,jazoest,ANH):
+import requests,json
+session = requests.Session()
+def GetUIDAnh(Cookie,ANH):
+    headers = {'authority': 'www.facebook.com','accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9','accept-language': 'vi','cookie': Cookie,'sec-ch-prefers-color-scheme': 'light','sec-ch-ua': '"Chromium";v="106", "Google Chrome";v="106", "Not;A=Brand";v="99"','sec-ch-ua-mobile': '?0','sec-ch-ua-platform': '"Windows"','sec-fetch-dest': 'document','sec-fetch-mode': 'navigate','sec-fetch-site': 'none','sec-fetch-user': '?1','upgrade-insecure-requests': '1','viewport-width': '1366',}
+    response = requests.get('https://mbasic.facebook.com/',headers=headers).text
+    fb_dtsg = response.split('<input type="hidden" name="fb_dtsg" value="')[1].split('"')[0]
+    jazoest = response.split('<input type="hidden" name="jazoest" value="')[1].split('"')[0]
+    uid=Cookie.split("c_user=")[1].split(';')[0]
     params = {
         'profile_id': uid,
         'photo_source': '57',
         'av': uid,
-        '__user': cookie.split("c_user=")[1].split(";")[0],
+        '__user': uid,
         'fb_dtsg': fb_dtsg,
         'jazoest': jazoest,
-        'lsd': lsd,
         '__a': '1',
         '__req': '1d',
         '__hs': '19568.HYP:comet_pkg.2.1..2.1',
@@ -20,7 +26,6 @@ def upload(uid,cookie,fb_dtsg,jazoest,ANH):
         '__comet_req': '15',
         '__spin_r': '1007929669',
         '__spin_b': 'trunk',
-        '__spin_t': str(int(datetime.now().timestamp())),
     }
     response = session.post(
         'https://www.facebook.com/profile/picture/upload/',
@@ -32,3 +37,6 @@ def upload(uid,cookie,fb_dtsg,jazoest,ANH):
     payload = json_response["payload"]
     fbid = payload["fbid"]
     return fbid
+cookie='sb=ReS5ZguiXTHo8o9288VDis6R; datr=ReS5ZuShkyIs-iLd1vioGMq6; ps_l=1; ps_n=1; locale=vi_VN; c_user=61563479217760; fr=1OusDBIdxjkfDKL70.AWV8q8F4a93AHT42SdQRErfMXR0.BmxFR3..AAA.0.0.BmxFUK.AWUpd7c88lM; xs=12%3A7LNOXVO2ofa0_Q%3A2%3A1724142861%3A-1%3A-1; wd=1437x953; presence=C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1724143294843%2C%22v%22%3A1%7D'
+a=GetUIDAnh(cookie,'D:\\302697037_583865803489429_5100099679707137555_n.jpg')
+print(a)
